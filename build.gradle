@@ -1,0 +1,47 @@
+buildscript {
+  repositories {
+    mavenCentral()
+  }
+
+  dependencies {
+    classpath 'com.android.tools.build:gradle:0.12.+'
+  }
+}
+
+apply plugin: 'android-library'
+apply plugin: 'maven-publish'
+
+
+group = 'com.alipay'
+version = '1.2'
+
+repositories {
+    mavenLocal()
+    mavenCentral()
+}
+
+dependencies {
+    compile 'com.google.android:support-v4:r7'
+}
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '1.10'
+}
+
+android {
+  compileSdkVersion 14
+  buildToolsVersion '19.1'
+    lintOptions {
+        abortOnError false
+    }
+}
+
+def artifactName = "build/outputs/aar/alipay_lib-${project.version}.aar"
+
+publishing {
+    publications {
+        maven(MavenPublication) {
+            artifact file(artifactName)
+        }
+    }
+}
